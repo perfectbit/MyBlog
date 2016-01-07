@@ -9,15 +9,14 @@ type Config struct {
 	Pages []s.Route
 }
 
-func NewConfig() Config {
-	var pages = []s.Route{
-		s.Route{
-			"/",
-			&c.Home{},
-			"home.html"},
-		}
-
-	var config = Config{pages}
-
+func GetConfig() Config {
 	return config
 }
+
+
+var config = Config{[]s.Route{
+	s.Route{
+		"/",
+		&c.Home{},
+		"home.html"},
+	}}

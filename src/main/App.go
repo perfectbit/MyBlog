@@ -12,7 +12,7 @@ import(
 var addr = flag.String("localhost", ":1234", "http service address") // Q=17, R=18
 
 func main() {
-	var config = cfg.NewConfig()
+	var config = cfg.GetConfig()
 
 	flag.Parse()
 	for _, value := range config.Pages {
