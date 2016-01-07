@@ -11,6 +11,6 @@ type Route struct {
 }
 
 type Controller interface {
+	SetTemplate(tpl *string)
 	Exec(w http.ResponseWriter, req *http.Request)
 }
-

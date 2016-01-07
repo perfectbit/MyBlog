@@ -2,9 +2,9 @@ package main
 
 import(
 	"cfg"
+	"system"
+
 	"flag"
-//	"fmt"
-//	"html/template"
 	"log"
 	"net/http"
 )
@@ -14,10 +14,9 @@ var addr = flag.String("localhost", ":1234", "http service address") // Q=17, R=
 func main() {
 	var config = cfg.NewConfig()
 
-//	fmt.Printf("%+v", config)
-
 	flag.Parse()
 	for _, value := range config.Pages {
+		value.Cntr.SetTemplate(system.ReadTemplate(value.Tpl))
 		http.Handle(value.Url, http.HandlerFunc(value.Cntr.Exec))
 	}
 
@@ -25,5 +24,5 @@ func main() {
 	if err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
-
 }
+

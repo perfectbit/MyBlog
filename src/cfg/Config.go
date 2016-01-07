@@ -13,7 +13,7 @@ func NewConfig() Config {
 	var pages = []s.Route{
 		s.Route{
 			"/",
-			c.Home{},
+			&c.Home{},
 			"home.html"},
 		}
 

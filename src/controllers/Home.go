@@ -5,30 +5,19 @@ import(
 	"html/template"
 )
 
-type Home struct {}
-
-func (h Home) Exec(w http.ResponseWriter, req *http.Request) {
-	var templ = template.Must(template.New("qr").Parse(templateStr))
-	templ.Execute(w, req.FormValue("s"))
+type Home struct {
+	tpl *string
 }
 
-const templateStr = `
-<html>
-<head>
-<title>QR Link Generator</title>
-</head>
-<body>
-{{if .}}
-<img src="http://chart.apis.google.com/chart?chs=300x300&cht=qr&choe=UTF-8&chl={{.}}" />
-<br>
-{{.}}
-<br>
-<br>
-{{end}}
-<form action="/" name=f method="GET"><input maxLength=1024 size=70
-name=s value="" title="Text to QR Encode"><input type=submit
-value="Show QR" name=qr>
-</form>
-</body>
-</html>
-`
+func (h *Home) Exec(w http.ResponseWriter, req *http.Request) {
+	var templ, err = template.New("qr").Parse(*(h.tpl))
+	templ.Execute(w, req.FormValue("s"))
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+func (h *Home) SetTemplate(newTpl *string) {
+	h.tpl = newTpl
+}
